@@ -7,8 +7,9 @@ import Alert from '../src/core/Alert'
 const Routes = () => {
     return (
         <BrowserRouter>
-            <Alert />
+
             <Menu />
+            <Alert />
             <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/signup" exact component={Signup} />

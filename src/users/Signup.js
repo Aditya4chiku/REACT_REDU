@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Link } from 'react-router-dom'
 import { connect } from "react-redux";
 import { setAlert } from "../redux/actions/alert";
-const Signup = (props) => {
+import PropTypes from 'prop-types'
+import { signup } from '../redux/actions/auth'
+
+const Signup = ({ setAlert, signup, loading }) => {
+
     const [values, setValues] = useState({
         name: "",
         email: "",
@@ -24,10 +28,9 @@ const Signup = (props) => {
     const clickSubmit = event => {
         event.preventDefault();
         setValues({ ...values, error: false })
-        if (name !== '') {
-            props.setAlert('Name should be grater that 5 degit', 'danger')
-        }
-        console.log(values)
+
+        signup({ name, email, password })
+
     };
 
 
@@ -64,7 +67,9 @@ const Signup = (props) => {
                 />
             </div>
             <button onClick={clickSubmit} className="btn btn-primary">
-                Submit
+                {loading ? (<div className="spinner-border text-primary" >
+                    <span className="sr-only">Loading...</span>
+                </div>) : "Signup"}
             </button>
         </form>
     );
@@ -95,6 +100,7 @@ const Signup = (props) => {
             </div>
             <div className="col-sm-9 col-md-6 col-lg-10">
                 {signUpForm()}
+                {console.log("I am ", loading)}
             </div>
 
 
@@ -102,4 +108,20 @@ const Signup = (props) => {
     );
 };
 
-export default connect(null, { setAlert })(Signup);
+
+
+Signup.propTypes = {
+    setAlert: PropTypes.func.isRequired,
+    signup: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+    loading: PropTypes.bool
+}
+
+const mapStaeToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    loading: state.auth.loading
+})
+
+
+
+export default connect(mapStaeToProps, { setAlert, signup })(Signup);
