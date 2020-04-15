@@ -13,7 +13,7 @@ const isActive = (history, path) => {
 };
 
 
-const Menu = ({ history, signout }) => (
+const Menu = ({ history, signout, isAuthenticated }) => (
     <div>
         <ul className="nav nav-tabs bg-primary">
             <li className="nav-item">
@@ -25,6 +25,17 @@ const Menu = ({ history, signout }) => (
                     Home
                 </Link>
             </li>
+            {
+                isAuthenticated && (<li className="nav-item">
+                    <Link
+                        className="nav-link"
+                        style={isActive(history, "/userdashboard")}
+                        to="/userdashboard"
+                    >
+                        User DashBoard
+                </Link>
+                </li>)
+            }
             <li className="nav-item">
                 <Link
                     className="nav-link"
@@ -60,7 +71,13 @@ const Menu = ({ history, signout }) => (
 );
 
 Menu.propTypes = {
-    signout: PropTypes.func.isRequired
+    signout: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
 }
 
-export default connect(null, { signout })(withRouter(Menu));
+const mapStaeToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+})
+
+
+export default connect(mapStaeToProps, { signout })(withRouter(Menu));

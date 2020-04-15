@@ -28,6 +28,7 @@ export default function (state = initialState, action) {
             }
         case LOGIN_SUCCESS:
             localStorage.setItem('jwt', payload.token)
+            localStorage.setItem('auth', payload.token)
             return {
                 ...state, ...payload, isAuthenticated: true, loading: false, success: true
             }
