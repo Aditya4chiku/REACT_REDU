@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { REGISTER_SUCCESS, REGISTER_FAILURE } from './type';
+import { REGISTER_SUCCESS, REGISTER_FAILURE, LOGIN_SUCCESS, LOGIN_FAILURE } from './type';
 import { setAlert } from './alert'
 
 export const signup = ({ name, email, password }) => async dispatch => {
@@ -19,14 +19,28 @@ export const signup = ({ name, email, password }) => async dispatch => {
     dispatch({ type: REGISTER_FAILURE })
     dispatch(setAlert(`${err.response.data.error}`, 'danger'))
   })
+}
 
 
-  // try {
-  //   const result = await axios.post('http://localhost:8000/api/signup', body, config);
-  //   console.log("Response from backend", result.data)
-  //   dispatcch({ type: REGISTER_SUCCESS, payload: result.data })
-  // } catch (err) {
-  //   console.log("Error", err)
-  // }
+export const signin = ({ email, password }) => dispatch => {
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  const body = JSON.stringify({ email, password })
+  axios.post('http://localhost:8000/api/signin', body, config).then(respose => {
+    console.log(respose)
+    dispatch(setAlert('Login Success', 'success'))
+    dispatch({ type: LOGIN_SUCCESS, payload: respose.data })
+  }).catch(err => {
+    const errors = err.response.data.error
+    dispatch(setAlert(`${errors}`))
+    dispatch({ type: LOGIN_FAILURE })
+  })
+
 
 }
+
+

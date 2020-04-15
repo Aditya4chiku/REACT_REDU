@@ -1,6 +1,7 @@
-import { REGISTER_SUCCESS, REGISTER_FAILURE } from "../actions/type";
+import { REGISTER_SUCCESS, REGISTER_FAILURE, LOGIN_SUCCESS, LOGIN_FAILURE } from "../actions/type";
 
 const initialState = {
+    token: localStorage.getItem('jwt'),
     loading: true,
     success: false,
     user: null,
@@ -15,9 +16,15 @@ export default function (state = initialState, action) {
             return {
                 ...state, ...payload, loading: false, isAuthenticated: false
             }
-        case REGISTER_FAILURE: return {
-            ...state, loading: false, isAuthenticated: false, user: null
-        }
+        case REGISTER_FAILURE:
+        case LOGIN_FAILURE:
+            return {
+                ...state, loading: false, isAuthenticated: false, user: null
+            }
+        case LOGIN_SUCCESS:
+            return {
+                ...state, ...payload, isAuthenticated: true, loading: false, success: true
+            }
         default: return state
     }
 }
