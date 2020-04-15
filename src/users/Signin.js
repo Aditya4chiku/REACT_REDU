@@ -5,10 +5,10 @@ import { signin } from '../redux/actions/auth'
 import PropTypes from 'prop-types';
 
 
-const Signin = ({ signin, isAuthenticated }) => {
+const Signin = ({ signin, isAuthenticated, loading }) => {
     const [values, setValues] = useState({
-        email: "",
-        password: ""
+        email: "adi@gmail.com",
+        password: "adi@123"
     });
 
     const { email, password } = values;
@@ -49,7 +49,9 @@ const Signin = ({ signin, isAuthenticated }) => {
                 />
             </div>
             <button onClick={clickSubmit} className="btn btn-primary">
-                Submit
+                {loading ? (<div className="spinner-border text-primary" >
+                    <span className="sr-only">Loading...</span>
+                </div>) : "Signin"}
             </button>
         </form>
     );
@@ -67,7 +69,7 @@ Signin.propTypes = {
 }
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    load: state.auth.loading,
+    loading: state.auth.loading,
     alert: state.alert
 })
 export default connect(mapStateToProps, { signin })(Signin);

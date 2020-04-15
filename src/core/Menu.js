@@ -1,6 +1,9 @@
 import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { signout } from "../redux/actions/auth";
 
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 const isActive = (history, path) => {
     if (history.location.pathname === path) {
         return { color: "#ff9900" };
@@ -10,7 +13,7 @@ const isActive = (history, path) => {
 };
 
 
-const Menu = ({ history }) => (
+const Menu = ({ history, signout }) => (
     <div>
         <ul className="nav nav-tabs bg-primary">
             <li className="nav-item">
@@ -40,9 +43,24 @@ const Menu = ({ history }) => (
                     Signin
                 </Link>
             </li>
+            <li className="nav-item">
+                <span
+                    className="nav-link"
+                    style={{ cursor: 'pointer', color: '#ffffff' }}
+                    onClick={() => signout(() => {
+                        history.push('/')
+                    })}
+                >
+                    Signout
+                </span>
+            </li>
 
         </ul>
     </div>
 );
 
-export default withRouter(Menu);
+Menu.propTypes = {
+    signout: PropTypes.func.isRequired
+}
+
+export default connect(null, { signout })(withRouter(Menu));
