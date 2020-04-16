@@ -31,11 +31,11 @@ export const signin = ({ email, password }) => dispatch => {
         }
     }
     const body = JSON.stringify({ email, password })
-    axios.post('http://localhost:8000/api/signin', body, config).then(respose => {
-        console.log(respose)
+    axios.post('http://localhost:8000/api/signin', body, config).then(response => {
+        console.log("Resonse", response.data)
         dispatch(setAlert('Login Success', 'success'))
-        dispatch({ type: LOGIN_SUCCESS, payload: respose.data })
-        dispatch(loadUser(respose.data))
+        dispatch({ type: LOGIN_SUCCESS, payload: response.data })
+        dispatch(loadUser(response.data))
     }).catch(err => {
         const errors = err.response.data.error
         dispatch(setAlert(`${errors}`))
@@ -56,11 +56,13 @@ export const signout = () => dispatch => {
 export const loadUser = (data) => async dispatch => {
     const { user } = data
     console.log("USER", user._id)
+    console.log("USer", data.user)
 
     if (localStorage.getItem("jwt")) {
         setAuthToken(localStorage.getItem("jwt"))
     }
-    dispatch({ type: USER_LOADED, payload: data.data })
+    dispatch({ type: USER_LOADED, payload: data.user })
+
     // try {
     //     const res = await axios.get(`http://localhost:8000/api/secret/${user._id}`)
     //     console.log("Response", res.data)

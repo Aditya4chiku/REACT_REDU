@@ -13,72 +13,99 @@ const isActive = (history, path) => {
 };
 
 
-const Menu = ({ history, signout, isAuthenticated }) => (
-    <div>
-        <ul className="nav nav-tabs bg-primary">
-            <li className="nav-item">
-                <Link
-                    className="nav-link"
-                    style={isActive(history, "/")}
-                    to="/"
-                >
-                    Home
-                </Link>
-            </li>
-            {console.log("I am Authent", isAuthenticated)}
-            {
-                isAuthenticated && (<li className="nav-item">
+const Menu = ({ history, signout, isAuthenticated, user }) => {
+    return (
+        <div>
+            <ul className="nav nav-tabs bg-primary">
+                <li className="nav-item">
                     <Link
                         className="nav-link"
-                        style={isActive(history, "/user/dashboard")}
-                        to="/user/dashboard"
+                        style={isActive(history, "/")}
+                        to="/"
                     >
-                        User DashBoard
+                        Home
                 </Link>
-                </li>)
-            }
-            <li className="nav-item">
-                <Link
-                    className="nav-link"
-                    style={isActive(history, "/signup")}
-                    to="/signup"
-                >
-                    Signup
-                </Link>
-            </li>
-            <li className="nav-item">
-                <Link
-                    className="nav-link"
-                    style={isActive(history, "/signin")}
-                    to="/signin"
-                >
-                    Signin
-                </Link>
-            </li>
-            <li className="nav-item">
-                <span
-                    className="nav-link"
-                    style={{ cursor: 'pointer', color: '#ffffff' }}
-                    onClick={() => signout(() => {
-                        history.push('/')
-                    })}
-                >
-                    Signout
-                </span>
-            </li>
+                </li>
+                {isAuthenticated && user.role === 0 && (
+                    <li className="nav-item">
+                        <Link
+                            className="nav-link"
+                            style={isActive(history, "/")}
+                            to="/user/dashboard"
+                        >User Dashboard
+                    </Link>
+                    </li>
+                )
+                }
 
-        </ul>
-    </div>
-);
+                {
+                    isAuthenticated && user.role === 1 && (
+                        <li className="nav-item">
+                            <Link
+                                className="nav-link"
+                                style={isActive(history, "/")}
+                                to="/admin/dashboard"
+                            >
+                                Admin Dashboard
+              </Link>
+                        </li>
+                    )
+                }
+
+                {
+                    !isAuthenticated && (
+                        <Fragment>
+                            <li className="nav-item">
+                                <Link
+                                    className="nav-link"
+                                    style={isActive(history, "/signin")}
+                                    to="/signin"
+                                >
+                                    Signin
+                         </Link>
+                            </li>
+
+                            <li className="nav-item">
+                                <Link
+                                    className="nav-link"
+                                    style={isActive(history, "/signup")}
+                                    to="/signup"
+                                >
+                                    Signup
+                </Link>
+                            </li>
+                        </Fragment>
+                    )}
+                {
+                    isAuthenticated && (
+                        <li className="nav-item">
+                            <span
+                                className="nav-link"
+                                style={{ cursor: 'pointer', color: '#ffffff' }}
+                                onClick={() => signout(() => {
+                                    history.push('/')
+                                })}
+                            >
+                                Signout
+                    </span>
+                        </li>
+                    )
+                }
+
+            </ul>
+        </div>)
+}
 
 Menu.propTypes = {
     signout: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.object.isRequired
 }
 
-const mapStaeToProps = state => ({
+const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
 })
 
 
-export default connect(mapStaeToProps, { signout })(withRouter(Menu));
+export default connect(mapStateToProps, { signout })(withRouter(Menu));

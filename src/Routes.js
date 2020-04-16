@@ -6,7 +6,9 @@ import Menu from "./core/Menu";
 import Alert from '../src/core/Alert'
 import Signin from "./users/Signin";
 import PrivateRoute from "./auth/PrivateRoute";
-import UserDashBoard from "./users/UserDashBoard";
+import DashBoard from "./users/UserDashBoard";
+import AdminDashboard from './users/AdminDashboard'
+import AdminPrivateRoute from "./auth/AdminPrivateRoute";
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -14,7 +16,8 @@ const Routes = () => {
             <Menu />
             <Alert />
             <Switch>
-                <PrivateRoute path="/user/dashboard" exact component={UserDashBoard} />
+                <AdminPrivateRoute path="/admin/dashboard" exact component={AdminDashboard} />
+                <PrivateRoute path="/user/dashboard" exact component={DashBoard} />
                 <Route path="/" exact component={Home} />
                 <Route path="/signup" exact component={Signup} />
                 <Route path="/signin" exact component={Signin} />

@@ -1,46 +1,41 @@
 import React from 'react'
 
-
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
-const Dashboard = ({ user }) => {
+const AdminDashboard = ({ user }) => {
     const { _id, name, email, role } = user
-    const userLinks = () => {
-        return (
+    const adminLinks = () => {
 
+        return (
             <div className="card">
+                <h4 className="card-header">User Links</h4>
                 <ul className="list-group">
                     <li className="list-group-item">
-                        <Link className="nav-link" to='/cart'>My cart</Link>
+                        <Link className="nav-link" to='/create/category'>
+                            Create Category
+                        </Link>
                     </li>
                     <li className="list-group-item">
-                        <Link className="nav-link" to='/profile/update'>Update Profile</Link>
+                        <Link className="nav-link" to='/create/product'>
+                            Create Product
+                        </Link>
                     </li>
                 </ul>
-
             </div>
         )
     }
 
-    const userInfo = () => (
+
+    const adminInfo = () => (
         <div className="card mb-5">
             <h3 className="card-header">User Information</h3>
             <ul className="list-group">
-                <li className="list-group-item">{name}</li>
-                <li className="list-group-item">{email}</li>
+                <li className="list-group-item">{user.name}</li>
+                <li className="list-group-item">{user.email}</li>
                 <li className="list-group-item">
                     {role === 1 ? 'Admin' : 'Registered user'}
                 </li>
-            </ul>
-        </div>
-    )
-    const purchaseHistory = () => (
-        <div className="card mb-5">
-            <h3 className="card-header">Purchase histroy</h3>
-            <ul className="list-group">
-                <li className="list-group-item">histroy</li>
             </ul>
         </div>
     )
@@ -49,25 +44,22 @@ const Dashboard = ({ user }) => {
         <div>
             <div className="row">
                 <div className="col-3">
-                    {userLinks()}
+                    {adminLinks()}
                 </div>
                 <div className="col-9">
-                    {userInfo()}
-                    {purchaseHistory()}
+                    {adminInfo()}
+
                 </div>
             </div>
         </div>
     )
 }
-
-Dashboard.propTypes = {
+AdminDashboard.propTypes = {
     user: PropTypes.object.isRequired
 }
 
-
-const mapStateToProps = state => ({
+const mapStateToprops = state => ({
     user: state.auth.user
 })
 
-
-export default connect(mapStateToProps)(Dashboard)
+export default connect(mapStateToprops)(AdminDashboard)

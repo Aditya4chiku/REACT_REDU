@@ -6,21 +6,24 @@ import Spinner from '../layout/Spiner';
 
 const PrivateRoute = ({
     component: Component,
-    auth: { isAuthenticated, loading },
+    auth: { isAuthenticated, loading, user },
     ...rest
 }) => (
 
         <Route
             {...rest}
-            render={props =>
-                loading ? (
-                    <Spinner />
-                ) : isAuthenticated ? (
-                    <Component {...props} />
-                ) : (
-                            <Redirect to="/signin" />
-                        )
-            }
+            render={props => isAuthenticated && user.role === 1 ? (
+                <Component
+                    {...props}
+                />
+            ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/signin',
+                            state: { from: props.location }
+                        }}
+                    />
+                )}
         />
     );
 

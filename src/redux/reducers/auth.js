@@ -8,7 +8,8 @@ const initialState = {
     isAuthenticated: false
 }
 export default function (state = initialState, action) {
-    console.log(action.paylaod)
+    console.log("TYPE", action.type)
+    console.log("ACTION", action.payload)
     const { type, payload } = action;
     console.log("I am payload come from ", payload)
     switch (type) {
@@ -27,10 +28,11 @@ export default function (state = initialState, action) {
                 ...state, loading: false, isAuthenticated: false, user: null
             }
         case LOGIN_SUCCESS:
+
             localStorage.setItem('jwt', payload.token)
             localStorage.setItem('auth', payload.token)
             return {
-                ...state, ...payload, isAuthenticated: true, loading: false, success: true
+                ...state, user: payload, isAuthenticated: true, loading: false, success: true
             }
         case LOGOUT:
             localStorage.removeItem('jwt');

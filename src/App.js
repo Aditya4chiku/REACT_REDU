@@ -1,14 +1,20 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import store from './redux/store'
+import { store, persistor } from './redux/store'
+
 import Routes from './Routes'
+import { PersistGate } from 'redux-persist/integration/react'
+import setAuthToken from './redux/utils/setAuthToken'
+
+if (localStorage.getItem('jwt')) {
+  setAuthToken(localStorage.getItem('jwt'));
+}
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
-
+      <PersistGate persistor={persistor}>
         <Routes />
-      </div>
+      </PersistGate>
     </Provider>
   );
 }
