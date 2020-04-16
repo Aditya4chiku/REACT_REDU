@@ -25,12 +25,13 @@ const Menu = ({ history, signout, isAuthenticated }) => (
                     Home
                 </Link>
             </li>
+            {console.log("I am Authent", isAuthenticated)}
             {
                 isAuthenticated && (<li className="nav-item">
                     <Link
                         className="nav-link"
-                        style={isActive(history, "/userdashboard")}
-                        to="/userdashboard"
+                        style={isActive(history, "/user/dashboard")}
+                        to="/user/dashboard"
                     >
                         User DashBoard
                 </Link>

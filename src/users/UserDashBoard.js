@@ -1,7 +1,9 @@
-import { React } from 'react'
-const UserDashBoard = () => {
-    <div>
-        <h1>User Dash Board</h1>
-    </div>
+import React from 'react'
+
+export default function UserDashBoard() {
+    return (
+        <div>
+            <h1>User DashBoard</h1>
+        </div>
+    )
 }
-export default UserDashBoard
