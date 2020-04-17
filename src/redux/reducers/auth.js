@@ -11,6 +11,7 @@ export default function (state = initialState, action) {
     console.log("TYPE", action.type)
     console.log("ACTION", action.payload)
     const { type, payload } = action;
+    console.log("Chk", payload)
     console.log("I am payload come from ", payload)
     switch (type) {
         case REGISTER_SUCCESS:
@@ -29,10 +30,9 @@ export default function (state = initialState, action) {
             }
         case LOGIN_SUCCESS:
 
-            localStorage.setItem('jwt', payload.token)
-            localStorage.setItem('auth', payload.token)
+
             return {
-                ...state, user: payload, isAuthenticated: true, loading: false, success: true
+                ...state, ...payload, isAuthenticated: true, loading: false, success: true
             }
         case LOGOUT:
             localStorage.removeItem('jwt');

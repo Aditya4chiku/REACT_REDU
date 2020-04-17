@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Layout from '../layout/Layout'
 const AdminDashboard = ({ user }) => {
     const { _id, name, email, role } = user
     const adminLinks = () => {
@@ -41,17 +42,19 @@ const AdminDashboard = ({ user }) => {
     )
 
     return (
-        <div>
-            <div className="row">
-                <div className="col-3">
-                    {adminLinks()}
-                </div>
-                <div className="col-9">
-                    {adminInfo()}
+        <Layout titile="Dashboard" description="Admin Dashboard">
+            <div>
+                <div className="row">
+                    <div className="col-3">
+                        {adminLinks()}
+                    </div>
+                    <div className="col-9">
+                        {adminInfo()}
 
+                    </div>
                 </div>
             </div>
-        </div>
+        </Layout>
     )
 }
 AdminDashboard.propTypes = {

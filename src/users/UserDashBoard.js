@@ -4,6 +4,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Layout from '../layout/Layout'
 
 const Dashboard = ({ user }) => {
     const { _id, name, email, role } = user
@@ -46,17 +47,19 @@ const Dashboard = ({ user }) => {
     )
 
     return (
-        <div>
-            <div className="row">
-                <div className="col-3">
-                    {userLinks()}
-                </div>
-                <div className="col-9">
-                    {userInfo()}
-                    {purchaseHistory()}
+        <Layout titile="Dashboard" description="User Dashboard">
+            <div>
+                <div className="row">
+                    <div className="col-3">
+                        {userLinks()}
+                    </div>
+                    <div className="col-9">
+                        {userInfo()}
+                        {purchaseHistory()}
+                    </div>
                 </div>
             </div>
-        </div>
+        </Layout>
     )
 }
 
